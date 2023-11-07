@@ -1,0 +1,74 @@
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    justify-content: flex-start;
+}
+
+.onboarding-layout {
+
+    .onboarding-table {
+        @include flex-col();
+    
+        .table-header {
+            @include flex-row();
+            font-weight: bold;
+            & > .rc-checkbox {
+                width: 100px;
+                min-width: 100px;
+            }
+    
+            & > .id {
+                min-width: 100px;
+            }
+    
+            & > .email,
+            & > .uuid {
+                min-width: 300px;
+            }
+            & > .phone {
+                width: 120px;
+            }
+            & > div {
+                min-width: 100px;
+            }
+        }
+    
+        .table-row {
+            @include flex-row();
+    
+            & > .rc-checkbox {
+                width: 100px;
+                min-width: 100px;
+            }
+    
+            & > .email,
+            & > .uuid {
+                min-width: 300px;
+            }
+
+            & > .phone {
+                width: 120px;
+            }
+
+            & > .id {
+                min-width: 100px;
+            }
+    
+            & > div {
+                min-width: 100px;
+            }
+            & > .email-verified,
+            & > .user-active {
+                text-align: center;
+            }
+        }
+    }
+
+}

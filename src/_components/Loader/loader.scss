@@ -1,0 +1,13 @@
+.loader-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+
+  & > svg {
+    width: 349px;
+    height: 200px;
+  }
+}

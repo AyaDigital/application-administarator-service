@@ -1,0 +1,25 @@
+.marker-photo {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    border: 2px solid;
+    border-color: rgba(44, 121, 206, 1);
+
+    & > img {
+        width: 48px;
+        height: 48px;
+        border-radius: 100%;
+        border: 1px;
+        width: auto;
+        object-fit: contain;
+    }
+}
+
+.containerStyle {
+    width: 100%;
+	height: 800px;
+}

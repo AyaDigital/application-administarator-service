@@ -1,0 +1,67 @@
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px
+}
+
+.settings-layout {
+
+    .controls-block {
+        @include flex-row();
+        padding: 10px;
+    }
+
+    .settings-block {
+        .search-block {
+            @include flex-row();
+            justify-content: space-between;
+
+
+            & > div {
+                @include flex-row();
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        .advanced-block {
+
+            padding-top: 20px;
+
+            & > .title {
+                width: 100%;
+                text-align: center;
+                padding: 20px;
+            }
+
+            & > div > div > .checkbox {
+                @include flex-row();
+                justify-content: flex-start;
+            }
+
+            & > div {
+                & > .label {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            &.hidden-state {
+                display: none;
+            }
+        }
+
+
+        .buttons-block {
+            @include flex-row();
+            padding-top: 20px;
+            justify-content: space-between;
+        }
+    }
+
+}

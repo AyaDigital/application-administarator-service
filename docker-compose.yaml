@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+
+  nginx-admin:
+    image: nginx:1.21.0-alpine
+    container_name: nginx-admin
+    restart: unless-stopped
+    links:
+      - admin-app
+    ports:
+      - "81:81"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+      - ./:/usr/share/nginx/html
+    networks:
+      - admin_app_web
+
+  admin-app:
+    image: node:lts
+    container_name: admin-app
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    working_dir: /var/www/html/
+    restart: unless-stopped
+    #environment:
+      #REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL}
+      #REACT_APP_SET_AUTH: ${REACT_APP_SET_AUTH}
+      #REACT_APP_KEYCLOAK_URL: ${REACT_APP_KEYCLOAK_URL}
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./:/var/www/html/
+    networks:
+      - admin_app_web
+
+networks:
+  admin_app_web:
+    driver: bridge
+
+volumes:
+  admin-app:
+  nginx-admin:

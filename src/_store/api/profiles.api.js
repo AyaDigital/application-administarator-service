@@ -16,6 +16,7 @@ const EDUCATION = '/api/education-train';
 const PROFILES = '/api/profiles';
 const PROFILES_ROLES = '/api/profiles/roles';
 const PROFILE = '/api/profile';
+const API_SETTING_ADDRESS = '/api/settings/address';
 
 export const profilesApi = createApi({
 	reducerPath: 'profilesApi',
@@ -127,6 +128,21 @@ export const profilesApi = createApi({
 				method: 'PUT',
 				body: data
 			}),
+		}),
+		updateProfileAddress: build.mutation({
+			query: ({id, data}) => ({
+				url: HEALTHAPP_URI + API_SETTING_ADDRESS + '/' + id,
+				method: 'PUT',
+				body: data
+			}),
+			invalidatesTags: (result) => ["Address"],
+		}),
+		getProfileAddress: build.query({
+			query: (id) => ({
+				url: HEALTHAPP_URI + API_SETTING_ADDRESS + '/' + id,
+				method: 'GET'
+			}),
+			providesTags: (result) => ["Address"],
 		})
 	}),
 })
@@ -144,5 +160,7 @@ export const {
 	useUploadProfileAvatarByUuidMutation,
 	useDestroyProfileAvatarByUuidMutation,
 	useGetProfileAvatarByUuidQuery,
-	useUpdateCredentialsMutation
+	useUpdateCredentialsMutation,
+	useUpdateProfileAddressMutation,
+	useGetProfileAddressQuery
 } = profilesApi;

@@ -232,6 +232,23 @@ const SideBar = () => {
 								</li>
 							) : null
 						}
+						{
+							isAdmin ? (
+								<li>
+									<Button
+										sx={menu}
+										disableripple='true'
+										isDisabled={pathname.includes('appointments')}
+										onClick={() => navigate('/appointments')}
+									>
+										<div className="button-label">
+											<Settingsicon />
+											<div className="menu-item-title">Appointments</div>
+										</div>
+									</Button>
+								</li>
+							) : null
+						}
 					</ul>
 				</div>
 			</div>

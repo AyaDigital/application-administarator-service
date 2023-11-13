@@ -71,7 +71,7 @@ const ProfilesEdition = () => {
 										<SpecialityData id={profileId} />
 									</TabPanel>
 									<TabPanel>
-										<AddressData />
+										<AddressData id={profileId} />
 									</TabPanel>
 								</TabPanels>
 							</Tabs>

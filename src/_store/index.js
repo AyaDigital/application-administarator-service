@@ -14,6 +14,8 @@ import { degreesApi } from './api/degrees.api';
 import { languagesApi } from './api/languages.api';
 import { emergencyApi } from './api/emergency.api';
 import { appealsApi } from './api/appeals.api';
+import { appointmentsApi } from './api/appointments.api';
+import { geocoderApi } from './api/geocoder.api';
 
 import { authReducer } from './slice/auth.slice';
 import { profileReducer } from './slice/profile.slice';
@@ -33,6 +35,8 @@ export * from './api/degrees.api';
 export * from './api/languages.api';
 export * from './api/emergency.api';
 export * from './api/appeals.api';
+export * from './api/geocoder.api';
+export * from './api/appointments.api';
 
 export const store = configureStore({
   reducer: {
@@ -52,7 +56,9 @@ export const store = configureStore({
     [degreesApi.reducerPath]: degreesApi.reducer,
     [languagesApi.reducerPath]: languagesApi.reducer,
     [emergencyApi.reducerPath]: emergencyApi.reducer,
-    [appealsApi.reducerPath]: appealsApi.reducer
+    [appealsApi.reducerPath]: appealsApi.reducer,
+    [geocoderApi.reducerPath]: geocoderApi.reducer,
+    [appointmentsApi.reducerPath]: appointmentsApi.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
@@ -70,5 +76,7 @@ export const store = configureStore({
       .concat(languagesApi.middleware)
       .concat(emergencyApi.middleware)
       .concat(appealsApi.middleware)
+      .concat(geocoderApi.middleware)
+      .concat(appointmentsApi.middleware)
       .concat(practitionersApi.middleware),
 });

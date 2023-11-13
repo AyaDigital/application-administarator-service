@@ -36,7 +36,6 @@ const MapBlock = ({
 		};
 
 		const AnyReactComponent = ({ content, action = () => {}, text = '', icon }) => {
-			console.log('icon', icon)
 			if (icon) {
 				return icon;
 			} else {

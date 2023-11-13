@@ -29,7 +29,7 @@
             }
             & > div > div > .control {
                 @include flex-row();
-                justify-content: flex-end;
+                justify-content: space-around;
             }
 
             & > div > div > .items-cloud {
@@ -69,6 +69,12 @@
         column-gap: 10px;
         justify-content: flex-start
     }
+}
+
+.control {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
 }
 
 .listbox {

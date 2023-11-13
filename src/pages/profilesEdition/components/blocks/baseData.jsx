@@ -46,7 +46,6 @@ const BaseData = ({
 
 	useEffect(() => {
 		if (profile) {
-			console.log('profile.fullName', profile.fullName);
 			setEmail(profile.email);
 			setFirstName(profile.fullName);
 			setIsVerified(profile.verified);

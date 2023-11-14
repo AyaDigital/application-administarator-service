@@ -176,25 +176,29 @@ const Appointments = () => {
 									fontWeight='bold'
 								>
 									<GridItem>
-										Before timeout
+										Before timeout (0 - 20 minutes)
 									</GridItem>
 									<GridItem>
 										<TextField
 											value={currentBeforeTimeout}
 											onChange={({ target: {value} }) => {
-												setCurrentBeforeTimeout(value)
+												if (value >= 0 && value <= 20) {
+													setCurrentBeforeTimeout(value)
+												}
 											}}
 										/>
 									</GridItem>
 
 									<GridItem>
-										After timeout
+										After timeout (0 - 2 minutes)
 									</GridItem>
 									<GridItem>
 									<TextField
 											value={currentAfterTimeout}
 											onChange={({ target: {value} }) => {
-												setCurrentAfterTimeout(value)
+												if (value >= 0 && value <= 2) {
+													setCurrentAfterTimeout(value);
+												}
 											}}
 										/>
 									</GridItem>

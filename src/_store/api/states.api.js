@@ -53,7 +53,7 @@ export const statesApi = createApi({
 })
 
 export const {
-	useFetchStatesQuery,
+	// useFetchStatesQuery,
 	useFetchStatesByPageQuery,
 	useCreateStateMutation,
 	useUpdateStateMutation,

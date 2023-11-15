@@ -6,7 +6,7 @@ const SCHEDULES = '/api/schedules'
 const ADMIN = '/admin'
 
 export const schedulesApi = createApi({
-	reducerPath: 'statesApi',
+	reducerPath: 'schedulesApi',
 	baseQuery: baseQueryWithToken,
 	entityTypes: ["Schedule"],
 	endpoints: (builder) => ({

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { uniq } from 'lodash';
+import { uniq, isEqual } from 'lodash';
 import {
 	Spinner,
 } from '@chakra-ui/react';
@@ -16,7 +16,7 @@ const SpecialitiesLoader = ({
 }) => {
 	const [search, setSearch] = useState('');
 	const [currentScrollToken, setCurrentScrollToken] = useState(null);
-	const [currentSpecialities, setCurrentSpecialities] = useState([]);
+	const [currentList, setCurrentList] = useState([]);
 	const [page, setPage] = useState(0);
 
 	const { isLoading: isSpecialitiesLoading, isSuccess, data: specialities = {}}
@@ -28,11 +28,14 @@ const SpecialitiesLoader = ({
 	const { data = [], scrollToken, isLastPage } = specialities;
 
 	useEffect(() => {
-		const specialitiesData = currentScrollToken === null ? data : uniq([...data, ...currentSpecialities]);
-		setCurrentSpecialities(specialitiesData)
-	}, [isSuccess, isLastPage, scrollToken, data, currentScrollToken, currentSpecialities]);
+		const list = currentScrollToken === null ? data : uniq([...data, ...currentList]);
+		if (!isEqual(list, currentList)) {
+			setCurrentList(list);
+		}
+	}, [isSuccess, data, currentScrollToken, currentList]);
 
 	const _loadNextPage = () => {
+		console.log('loadnextPage')
 		return new Promise(resolve =>
 			setTimeout(() => {
 				setPage(page + 1)
@@ -44,12 +47,13 @@ const SpecialitiesLoader = ({
 
 	  useEffect(() => {
 		if (search) {
+			console.log('search')
 			setPage(0)
 			setCurrentScrollToken(null);
-			setCurrentSpecialities([])
+			setCurrentList([])
 		}
 	  }, [search])
-
+	console.log('8888')
 	return (
 		<div className='speciality-layout'>
 			<>
@@ -67,11 +71,11 @@ const SpecialitiesLoader = ({
                     <InfiniteLoaderBlock
                         hasNextPage={!isLastPage}
                         isNextPageLoading={false}
-                        items={currentSpecialities}
+                        items={currentList || []}
+						fieldname='spec'
                         // listOpen={search}
                         loadNextPage={_loadNextPage}
                         wrapperClassName='listbox'
-                        groupedOptions={currentSpecialities || []}
                         handleSelect={handleAddSpeciality}
                         search={search}
                         onFocus={handleListOpen}

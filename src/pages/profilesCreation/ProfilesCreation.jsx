@@ -290,7 +290,7 @@ const ProfilesManagement = () => {
 									</GridItem>
 									<GridItem h='50px' colSpan={1} className='verification-block'>
 										<div className='checkbox'>
-											<div>Not active</div>
+											<div>Active</div>
 											<Checkbox
 												value='not-active'
 												onChange={onChangeActive}
@@ -300,7 +300,7 @@ const ProfilesManagement = () => {
 									</GridItem>
 									<GridItem h='50px' colSpan={1} className='verification-block'>
 										<div className='checkbox'>
-											<div>Not verified</div>
+											<div>Verified</div>
 											<Checkbox
 												value='not-verified'
 												onChange={onChangeVerified}

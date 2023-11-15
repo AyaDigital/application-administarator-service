@@ -263,9 +263,10 @@ const BaseData = ({
 						</GridItem>
 						<GridItem h='50px' colSpan={1} className='verification-block'>
 							<div className='checkbox'>
-								<div>Not active</div>
+								<div>Active</div>
 								<Checkbox
 									value={isActive}
+									isChecked={isActive}
 									onChange={onChangeActive}
 									disabled={false}
 								/>
@@ -273,9 +274,10 @@ const BaseData = ({
 						</GridItem>
 						<GridItem h='50px' colSpan={1} className='verification-block'>
 							<div className='checkbox'>
-								<div>Not verified</div>
+								<div>Verified</div>
 								<Checkbox
 									value={isVerified}
+									isChecked={isVerified}
 									onChange={onChangeVerified}
 									disabled={false}
 								/>

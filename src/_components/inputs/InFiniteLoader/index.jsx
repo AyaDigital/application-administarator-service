@@ -15,14 +15,10 @@ const InfiniteLoaderWrapper =({
   items,
   loadNextPage,
   wrapperClassName,
-  getOptionProps,
-  groupedOptions,
-  listboxProps,
   fieldname = 'name',
   search,
   onChange,
   onFocus,
-  onBlur,
   handleSelect,
   listOpen
 }) => {
@@ -33,25 +29,25 @@ const InfiniteLoaderWrapper =({
 	const isItemLoaded = (index) => !hasNextPage || index < items.length;
 
 	const Item = ({ index, style }) => {
+		console.log('index', index);
+		if (!isItemLoaded(index)) {
+			return <li style={style}>Loading...</li>;
+		} else {
+			const option = items[index];
+			const name = option.name || "no name";
 
-	if (!isItemLoaded(index)) {
-		return <li style={style}>Loading...</li>;
-	} else {
-		const option = groupedOptions[index];
-		const name = option.name || "no name";
-
-		return (
-			<li
-				style={style}
-				onClick={(e) => {
-					handleSelect(Number(option.id))
-				}}
-			>
-				{name}
-			</li>
-		);
-	}
-  };
+			return (
+				<li
+					style={style}
+					onClick={(e) => {
+						handleSelect(Number(option.id))
+					}}
+				>
+					{name}
+				</li>
+			);
+		}
+	};
 
   return (
 		<Popover placement='bottom-start' isOpen={listOpen}>

@@ -263,7 +263,7 @@ const SpecialityData = ({
 						<GridItem h='50px' colSpan={2}>
 
 							<InsurancesLoader
-								handleAddSpeciality={handleAddSpeciality}
+								handleAddInsurance={handleAddInsurance}
 							/>
 
 						</GridItem>
@@ -294,7 +294,7 @@ const SpecialityData = ({
 						<GridItem h='50px' colSpan={2}>
 
 							<SpecialitiesLoader
-								handleAddInsurance={handleAddInsurance}
+								handleAddSpeciality={handleAddSpeciality}
 							/>
 
 						</GridItem>

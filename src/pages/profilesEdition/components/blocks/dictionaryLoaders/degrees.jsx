@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { uniq } from 'lodash';
+import { uniq, isEqual } from 'lodash';
 import {
 	Spinner,
 } from '@chakra-ui/react';
@@ -28,8 +28,10 @@ const DegreesLoader = ({
 
 	useEffect(() => {
 		const list = currentScrollToken === null ? data : uniq([...data, ...currentList]);
-		setCurrentList(list)
-	}, [isSuccess, isLastPage, scrollToken, data, currentScrollToken, currentList]);
+		if (!isEqual(currentList, list)) {
+			setCurrentList(list);
+		}
+	}, [isSuccess, data, currentScrollToken, currentList]);
 
 	const _loadNextPage = () => {
 		return new Promise(resolve =>

@@ -16,5 +16,4 @@ test('renders learn react link', () => {
 			</BrowserRouter>
 		</Provider>
 	);
-	// expect(linkElement).toBeInTheDocument();
 });

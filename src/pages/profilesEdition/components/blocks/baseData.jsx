@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Checkbox } from '@chakra-ui/react';
 import clone from 'lodash/clone';
+import { ModalForm } from '_components/controls/modal';
 import {
 	Button,
 	Select,
@@ -12,7 +13,13 @@ import {
 	Grid,
 	GridItem,
 	Spinner,
-	FormErrorMessage
+	FormErrorMessage,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalBody,
+	ModalCloseButton,
 } from '@chakra-ui/react';
 
 import {
@@ -38,11 +45,15 @@ const BaseData = ({
 	const [isEmailError, setIsEmailError] = useState(false);
 	const [roles, setRoles] = useState([]);
 	const [error, setError] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [validError, setValidError] = useState(false);
 	const { isLoading, isSuccess, data: profile = {}} = useGetProfileByIdQuery(id);
 	const [ updateProfile, {isLoading: isProfileUpdating, isSuccess: isProfileUpdated}] = useUpdateProfileMutation();
 	const [ updatePassword, {isLoading: isCredentialsUpdating, isSuccess: isCredentialsUpdated}] = useUpdateCredentialsMutation();
 	const { data: rolesList = [] } = useFetchRolesQuery();
+
+	const handleModalClose = () => setIsModalOpen(false);
+	const handleModalOpen = () => setIsModalOpen(true);
 
 	useEffect(() => {
 		if (profile) {
@@ -53,6 +64,10 @@ const BaseData = ({
 			//setRoles(profile?.roles || [])
 		}
 	}, [profile, isSuccess])
+
+	useEffect(() => {
+		handleModalClose();
+	}, [isCredentialsUpdated])
 
 	const handleRemoveRole = (role) => {
 		const filtered = roles.filter(item => item !== String(role));
@@ -252,7 +267,7 @@ const BaseData = ({
 									variant='outline'
 									colorScheme='red'
 									size='xl'
-									onClick={handleUpdatePassword}
+									onClick={handleModalOpen}
 								>
 									Password Update
 								</Button>
@@ -345,6 +360,39 @@ const BaseData = ({
 				)
 			}
 			</>
+			<Modal
+				isOpen={isModalOpen}
+				isCentered
+				size='xl'
+				onClose={() => handleModalClose()}
+				aria-labelledby="modal-modal-title"
+				aria-describedby="modal-modal-description"
+			>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalHeader>
+						<div className='modal-window-header'>
+							<div>Are you sure to want change password ?</div>
+						</div>
+					</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>
+						<div>
+							<ModalForm
+								isLoading={isCredentialsUpdating}
+								handleOperation={() => {
+									handleUpdatePassword();
+								}}
+								onClose={() => {
+									setPassword('');
+									setRepeatPassword('');
+									handleModalClose()
+								}}
+							/>
+						</div>
+					</ModalBody>
+				</ModalContent>
+			</Modal>
 		</div>
 	)
 };

@@ -323,7 +323,6 @@ const Practitioners = () => {
 						<ModalBody>
 							<div>
 								<ModalForm
-									specialityId={selectedPractitioners[0]}
 									isLoading={isDeletionLoading}
 									handleOperation={() => {
 										deletePractitioner(selectedPractitioners[0]);

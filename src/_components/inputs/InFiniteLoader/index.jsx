@@ -10,17 +10,16 @@ import {
 } from '@chakra-ui/react';
 
 const InfiniteLoaderWrapper =({
-  hasNextPage,
-  isNextPageLoading,
-  items,
-  loadNextPage,
-  wrapperClassName,
-  fieldname = 'name',
-  search,
-  onChange,
-  onFocus,
-  handleSelect,
-  listOpen
+	hasNextPage,
+	isNextPageLoading,
+	items,
+	loadNextPage,
+	wrapperClassName,
+	search,
+	onChange,
+	onFocus,
+	handleSelect,
+	listOpen
 }) => {
 
 	const itemCount = hasNextPage ? items.length + 1 : items.length;
@@ -29,7 +28,6 @@ const InfiniteLoaderWrapper =({
 	const isItemLoaded = (index) => !hasNextPage || index < items.length;
 
 	const Item = ({ index, style }) => {
-		console.log('index', index);
 		if (!isItemLoaded(index)) {
 			return <li style={style}>Loading...</li>;
 		} else {

@@ -13,11 +13,10 @@ const ModalForm = ({
 	onClose
 }) => {
 	return (
-		<div className='clinics-form-layout'>
+		<div className='clinics-form-layout' data-testid="modal">
 			<>
 			{
 				isLoading ? (
-					
 						<Spinner
 							thickness='4px'
 							speed='0.65s'
@@ -40,6 +39,7 @@ const ModalForm = ({
 
 							<GridItem rowSpan={1} colSpan={1} textAlign={'center'}>
 								<Button
+									data-testid="no-button"
 									w='180px'
 									h='50px'
 									variant='outline'
@@ -52,6 +52,7 @@ const ModalForm = ({
 							</GridItem>
 							<GridItem rowSpan={1} colSpan={1} textAlign={'center'}>
 								<Button
+									data-testid="yes-button"
 									colorScheme='teal'
 									variant='outline'
 									w='180px'

@@ -38,7 +38,7 @@ import { LanguagesLoader } from './dictionaryLoaders/languages';
 import '../../profilesEdition.scss';
 
 const SpecialityData = ({
-	id = null,
+	id = null
 }) => {
 	const isLoading = false;
 	const [file, setFile] = useState([]);

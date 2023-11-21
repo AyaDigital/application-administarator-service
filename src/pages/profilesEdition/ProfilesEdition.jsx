@@ -10,6 +10,8 @@ import {
 	Input as TextField
   } from '@chakra-ui/react';
 
+import { useGetProfileByIdQuery } from '_store';
+
 import { BaseData, SpecialityData, AddressData } from './components';
 import './profilesEdition.scss';
 import {  } from "react-router-dom";
@@ -18,6 +20,7 @@ const ProfilesEdition = () => {
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
 	const profileId =  pathname.split('/').pop();
+	const { isLoading, isSuccess, data: profile = {}} = useGetProfileByIdQuery(profileId);
 
 	return (
 			<div className='settings-layout'>
@@ -65,10 +68,17 @@ const ProfilesEdition = () => {
 								</TabList>
 								<TabPanels>
 									<TabPanel>
-										<BaseData  id={profileId} />
+										<BaseData
+											id={profileId}
+											isLoading={isLoading}
+											isSuccess={isSuccess}
+											profile={profile}
+										/>
 									</TabPanel>
 									<TabPanel>
-										<SpecialityData id={profileId} />
+										<SpecialityData
+											id={profileId}
+										/>
 									</TabPanel>
 									<TabPanel>
 										<AddressData id={profileId} />

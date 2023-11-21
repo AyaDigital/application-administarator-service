@@ -23,7 +23,6 @@ import {
 } from '@chakra-ui/react';
 
 import {
-	useGetProfileByIdQuery,
 	useUpdateProfileMutation,
 	useFetchRolesQuery,
 	useUpdateCredentialsMutation
@@ -33,6 +32,9 @@ import '../../profilesEdition.scss';
 
 const BaseData = ({
 	id,
+	isLoading,
+	isSuccess,
+	profile
 }) => {
 	const [firstName, setFirstName] = useState();
 	const [lastName, setLastName] = useState();
@@ -42,12 +44,11 @@ const BaseData = ({
 	const [isActive, setIsActive] = useState(false);
 	const [isVerified, setIsVerified] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
-	const [isEmailError, setIsEmailError] = useState(false);
 	const [roles, setRoles] = useState([]);
 	const [error, setError] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [validError, setValidError] = useState(false);
-	const { isLoading, isSuccess, data: profile = {}} = useGetProfileByIdQuery(id);
+
 	const [ updateProfile, {isLoading: isProfileUpdating, isSuccess: isProfileUpdated}] = useUpdateProfileMutation();
 	const [ updatePassword, {isLoading: isCredentialsUpdating, isSuccess: isCredentialsUpdated}] = useUpdateCredentialsMutation();
 	const { data: rolesList = [] } = useFetchRolesQuery();
@@ -58,10 +59,11 @@ const BaseData = ({
 	useEffect(() => {
 		if (profile) {
 			setEmail(profile.email);
-			setFirstName(profile.fullName);
+			setFirstName(profile.firstName);
+			setLastName(profile.lastName);
 			setIsVerified(profile.verified);
 			setIsActive(profile.active);
-			//setRoles(profile?.roles || [])
+			setRoles(profile?.roles || [])
 		}
 	}, [profile, isSuccess])
 
@@ -335,7 +337,7 @@ const BaseData = ({
 								}}
 							>
 								{
-									rolesList.map(({code, name}, index) => (
+									rolesList?.map(({code, name}, index) => (
 										<option key={index} value={code}>{name}</option>
 									))
 								}

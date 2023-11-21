@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import upperfirst from 'lodash.upperfirst';
 import Pagination from 'rc-pagination';
 import clone from 'lodash/clone';
 import { Button } from '@chakra-ui/react';

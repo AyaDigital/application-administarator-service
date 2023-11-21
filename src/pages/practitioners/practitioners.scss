@@ -32,6 +32,10 @@
         align-items: center;
     }
 
+    .pagination {
+        padding: 10px 0px 10px 0px;
+    }
+
     .practitioners-table {
         @include flex-col();
     

@@ -12,7 +12,7 @@ const AVATAR = '/avatar';
 const UPLOAD = '/upload';
 const ABOUT_INFO = '/about-info';
 const PROFILES = '/api/profiles';
-const PROFILES_LIST = '/search-app/idm/profiles';
+const PROFILES_LIST = '/api/profiles/all';
 const SPECIALITIES = '/api/specialities';
 const SPECIALITIES_ADD = SPECIALITIES + "/add";
 const SPECIALITIES_DESTROY = SPECIALITIES + "/destroy";
@@ -68,8 +68,8 @@ export const practitionersApi = createApi({
 			providesTags: (result) => ["Practitioner"],
 		}),
 		fetchPractitioners: build.query({
-			query: () => ({
-				  url: HEALTHAPP_URI + PROFILES_LIST
+			query: (page = 0) => ({
+				  url: ADMIN_URI + PROFILES_LIST + "?page=" + page
 			}),
 			providesTags: (result) => ["Practitioners"],
 		}),

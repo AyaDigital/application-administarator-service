@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import upperfirst from 'lodash.upperfirst';
 import Loader from '_components/Loader';
 import { ModalForm } from '_components/controls/modal';
 import clone from 'lodash/clone';
 import { useNavigate  } from 'react-router-dom';
+import Pagination from 'rc-pagination';
 import {
 	Modal,
 	ModalOverlay,
@@ -33,8 +33,9 @@ import {  } from "react-router-dom";
 const Practitioners = () => {
 	// useGetPostsQuery();
 	const navigate = useNavigate();
-	const { isLoading, isError, data = {}} = useFetchPractitionersQuery();
-	const { data: practitioners = [] } = data;
+	const [page, setPage] = useState(0);
+	const { isLoading, isError, data = {}} = useFetchPractitionersQuery(page);
+	const { content: practitioners = [], totalElements} = data;
 	const [
 		deletePractitioner,
 		{
@@ -53,17 +54,20 @@ const Practitioners = () => {
 	const { isLoading: isFetchingOnePractitioner, data: practitioner = {}} = useFetchOnePractitionerQuery(id, {
 		skip
 	});
-	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const handleModalClose = () => setIsModalOpen(false);
 
 	const handleCreateFormClose = () => setIsCreateFormOpen(false);
-	const handleCreateFormOpen = () => setIsCreateFormOpen(true);
+
 	const handleScheduleFormClose = () => {
 		setIsScheduleFormOpen(false);
 		setIsScheduleCreationError()
 	}
 	const handleScheduleFormOpen = () => setIsScheduleFormOpen(true);
+
+	const handlePageSelect = (pageNum) => {
+		setPage(pageNum - 1)
+	}
 
 	useEffect(() => {
 		if (isPractitionerDeleted) {
@@ -187,9 +191,9 @@ const Practitioners = () => {
 							<div className='practitioners-table'>
 								<div className='table-header'>
 									<div className='rc-checkbox'></div>
-									<div className='id'>ID</div>
+									<div className='id'>First name</div>
+									<div className='phone'>Last Name</div>
 									<div className='email'>Email</div>
-									<div className='phone'>Phone</div>
 									<div className='uuid'>UUID</div>
 									<div>Email verified</div>
 									<div>Is active</div>
@@ -204,9 +208,9 @@ const Practitioners = () => {
 														disabled={open}
 													/>
 												</div>
-												<div className='id'>{item.id}</div>
+												<div className='id'>{item.firstName}</div>
+												<div className='phone'>{item.lastName}</div>
 												<div className='email'>{item.email}</div>
-												<div className='phone'>{item.phone}</div>
 												<div className='uuid'>{item.uuid}</div>
 												<div className='email-verified'>
 													{
@@ -233,6 +237,9 @@ const Practitioners = () => {
 						</>
 					)
 				}
+				<div className='pagination'>
+					<Pagination onChange={handlePageSelect} current={page + 1} total={totalElements} />
+				</div>
 				<Modal
 					isOpen={open}
 					size='2xl'

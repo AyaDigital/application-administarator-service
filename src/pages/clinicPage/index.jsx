@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import ErrorBoundary from '_components/error/ErrorBoundary';
 import clone from 'lodash/clone';
 import { Button } from '@chakra-ui/react';
 import { Checkbox } from '@chakra-ui/react';

@@ -68,9 +68,15 @@ export const practitionersApi = createApi({
 			providesTags: (result) => ["Practitioner"],
 		}),
 		fetchPractitioners: build.query({
-			query: (page = 0) => ({
-				  url: ADMIN_URI + PROFILES_LIST + "?page=" + page
-			}),
+			query: ({ page = 0, search = ''}) => {
+				let tail = '?page=' + page;
+				if (search) {
+					tail = "?search=" + search + '&page=' + page;
+				}
+				return {
+					url: ADMIN_URI + PROFILES_LIST + tail,
+				} 
+			},
 			providesTags: (result) => ["Practitioners"],
 		}),
 		fetchOnePractitioner: build.query({

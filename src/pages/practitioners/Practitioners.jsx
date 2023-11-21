@@ -34,7 +34,8 @@ const Practitioners = () => {
 	// useGetPostsQuery();
 	const navigate = useNavigate();
 	const [page, setPage] = useState(0);
-	const { isLoading, isError, data = {}} = useFetchPractitionersQuery(page);
+	const [search, setSearch] = useState('');
+	const { isLoading, isError, data = {}} = useFetchPractitionersQuery({ page, search });
 	const { content: practitioners = [], totalElements} = data;
 	const [
 		deletePractitioner,
@@ -51,6 +52,7 @@ const Practitioners = () => {
 	const [scheduleCreationError, setIsScheduleCreationError] = useState('');
 	const [skip, setSkip] = useState(true);
 	const [id, setId] = useState();
+
 	const { isLoading: isFetchingOnePractitioner, data: practitioner = {}} = useFetchOnePractitionerQuery(id, {
 		skip
 	});
@@ -164,23 +166,11 @@ const Practitioners = () => {
 							h='50px'
 							placeholder=" "
 							id="outlined-controlled"
-							//value={name}
+							value={search}
 							onChange={(event) => {
-								// setFullName(event.target.value);
+								setSearch(event.target.value);
 							}}
 						/>
-					</div>
-					<div>
-						<Button
-							w='180px'
-							h='50px'
-							variant='outline'
-							colorScheme='teal'
-							size='xl'
-							// onClick={onClose}
-						>
-							Search
-						</Button>
 					</div>
 				</div>
 				{

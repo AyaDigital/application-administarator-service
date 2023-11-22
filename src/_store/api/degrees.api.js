@@ -5,7 +5,6 @@ const HEALTHAPP_URI = process.env.REACT_APP_BASE_URL
 
 const SEARCH_MEDICAL_DEGREES = '/search-app/medical-degrees';
 const SEARCH_PROFILE_DEGREES = '/api/settings/medical-degrees/list-profile-by-uuid';
-const REFRESH_PROFILE_DEGREES = '/api/settings/medical-degrees/refresh-by-uuid';
 const CREATE_DEGREE = '/api/settings/medical-degrees/create';
 const EDIT_DEGREE = '/api/settings/medical-degrees/edit';
 const DESTROY_DEGREE = '/api/settings/medical-degrees/destroy';
@@ -78,14 +77,6 @@ export const degreesApi = createApi({
 			}),
 			providesTags: ["UserDegrees", "UserDegree"]
 		}),
-		refreshUserDegrees: builder.mutation({
-			query: ({id, data}) => ({
-				url: HEALTHAPP_URI + REFRESH_PROFILE_DEGREES + '/' + id,
-				method: 'PUT',
-				body: data
-			  }),
-			invalidatesTags: ["UserDegrees", "UserDegree"],
-		}),
 	}),
 })
 
@@ -93,7 +84,6 @@ export const {
 	useFetchMedicalDegreesQuery,
 	useFetchMedicalDegreesByPageQuery,
 	useFetchUserDegreesQuery,
-	useRefreshUserDegreesMutation,
 	useCreateMedicalDegreeMutation,
 	useDestroyMedicalDegreeMutation,
 	useEditMedicalDegreeMutation,

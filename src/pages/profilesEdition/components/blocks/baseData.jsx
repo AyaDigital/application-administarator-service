@@ -302,7 +302,7 @@ const BaseData = ({
 						</GridItem>
 
 						{
-							roles.length ? (
+							(roles.length && rolesList.length) ? (
 								<GridItem h='auto' colSpan={3}>
 									<div className='items-cloud'>
 										{

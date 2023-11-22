@@ -11,7 +11,7 @@ const GET_USRES_SPECIALITIES = '/api/specialities/show-specialities-by-uuid';
 export const specialitiesApi = createApi({
 	reducerPath: 'specialitiesApi',
 	baseQuery: baseQueryWithToken,
-	entityTypes: ["Specialities", "Speciality", "UserSpecialities", "UserSpeciality"],
+	entityTypes: ["Specialities", "Speciality", "UserSpecialities", "UserSpeciality", "Practitioner"],
 	endpoints: (builder) => ({
 		fetchSpecialities: builder.query({
 			query({scrollId, page, search}) {
@@ -35,14 +35,6 @@ export const specialitiesApi = createApi({
 				};
 			  },
 			  providesTags: (result) => ["Specialities"],
-		}),
-		refreshUserSpecialities: builder.mutation({
-			query: ({id, data}) => ({
-				url: HEALTHAPP_URI + REFRESH_USER_SPECIALITIES + '/' + id,
-				method: 'PUT',
-				body: data
-			  }),
-			invalidatesTags: ["UserSpecialities", "UserSpeciality"],
 		}),
 		fetchUserSpecialities: builder.query({
 			query: (id) => ({
@@ -79,7 +71,6 @@ export const specialitiesApi = createApi({
 
 export const {
 	useFetchUserSpecialitiesQuery,
-	useRefreshUserSpecialitiesMutation,
 	useFetchSpecialitiesQuery,
 	useFetchSpecialitiesByPageQuery,
 	useCreateSpecialityMutation,

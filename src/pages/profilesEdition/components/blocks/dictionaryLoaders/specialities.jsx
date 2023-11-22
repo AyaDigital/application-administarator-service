@@ -47,13 +47,12 @@ const SpecialitiesLoader = ({
 
 	  useEffect(() => {
 		if (search) {
-			console.log('search')
 			setPage(0)
 			setCurrentScrollToken(null);
 			setCurrentList([])
 		}
 	  }, [search])
-	console.log('8888')
+
 	return (
 		<div className='speciality-layout'>
 			<>

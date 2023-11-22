@@ -12,7 +12,10 @@ import {
 	ModalBody,
 	ModalCloseButton,
 	ModalFooter,
-	Input as TextField
+	Input as TextField,
+	CloseButton,
+	InputGroup,
+	InputRightElement
   } from '@chakra-ui/react'
 import {
 	useFetchPractitionersQuery,
@@ -159,18 +162,30 @@ const Practitioners = () => {
 				</div>
 
 				<div className='search-block'>
-					<div>Search Full Name</div>
 					<div>
-						<TextField
-							required
-							h='50px'
-							placeholder=" "
-							id="outlined-controlled"
-							value={search}
-							onChange={(event) => {
-								setSearch(event.target.value);
-							}}
-						/>
+						<InputGroup size='md'>
+							<TextField
+								required
+								h='50px'
+								w='300px'
+								placeholder="Search"
+								id="outlined-controlled"
+								value={search}
+								onChange={(event) => {
+									setSearch(event.target.value);
+								}}
+							/>
+							<InputRightElement width='4.5rem' height={'100%'}>
+								<CloseButton
+									color='gray.500'
+									size='sm'
+									onClick={() => {
+										setSearch('');
+									}}
+								/>
+							</InputRightElement>
+						</InputGroup>
+
 					</div>
 				</div>
 				{
@@ -184,7 +199,6 @@ const Practitioners = () => {
 									<div className='id'>First name</div>
 									<div className='phone'>Last Name</div>
 									<div className='email'>Email</div>
-									<div className='uuid'>UUID</div>
 									<div>Email verified</div>
 									<div>Is active</div>
 								</div>
@@ -201,7 +215,6 @@ const Practitioners = () => {
 												<div className='id'>{item.firstName}</div>
 												<div className='phone'>{item.lastName}</div>
 												<div className='email'>{item.email}</div>
-												<div className='uuid'>{item.uuid}</div>
 												<div className='email-verified'>
 													{
 														item.verified ? (

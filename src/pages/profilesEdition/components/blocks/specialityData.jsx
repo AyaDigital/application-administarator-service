@@ -50,34 +50,19 @@ const SpecialityData = ({
 	const { isLoading: isAvatarLoading, isSuccess: isAvatarLoaded, data: avatarData = {} } = useGetProfileAvatarByUuidQuery(id);
 
 	const [ updateAvatar, { isLoading: isAvatarUpdating }] = useUploadProfileAvatarByUuidMutation();
-	const [ updateAbout, { isLoading: isAboutUpdating }] = useUpdateProfileAboutInfoMutation();
-	const [ updateEducation, { isLoading: isEducationLoading }] = useUpdateProfileEducationMutation();
+	const [ updateAbout ] = useUpdateProfileAboutInfoMutation();
+	const [ updateEducation ] = useUpdateProfileEducationMutation();
 	const [ destroyAvatar, { isLoading: isAvatarDestroying } ] = useDestroyProfileAvatarByUuidMutation();
 
 	const { data: aboutInfo } = useGetProfileAboutInfoQuery(id);
 	const { data: educationData } = useGetProfileEducationQuery(id);
 
-	const [refreshSpecialities, { isLoading: isRefresSpecialitieshLoading, isSuccess: isSpecialitiesRefreshed }]
-	 	= useRefreshUserSpecialitiesMutation();
-	const [refreshLanguages, { isLoading: isRefreshLanguageLoading, isSuccess: isLanguagesRefreshed }]
-	 	= useRefreshUserLanguagesMutation();
-	const [refreshDegrees, { isLoading: isRefreshDegreesLoading, isSuccess: isDegreesRefreshed }]
-		= useRefreshUserDegreesMutation();
+	const [refreshSpecialities] = useRefreshUserSpecialitiesMutation();
+	const [refreshLanguages] = useRefreshUserLanguagesMutation();
+	const [refreshDegrees] = useRefreshUserDegreesMutation();
 
-	const [ deleteInsurance, { isSuccess: isInsuranceRemoved }] = useDeleteUserInsurancesMutation();
-	const [ addInsurance, { isSuccess: isInsuranceAdded, isLoading: isRefreshInsuranceLoading }] = useAddUserInsurancesMutation();
-
-	useEffect(() => {
-		if (
-			isSpecialitiesRefreshed ||
-			isLanguagesRefreshed ||
-			isDegreesRefreshed ||
-			isInsuranceRemoved ||
-			isInsuranceAdded
-		) {
-			// updateProfile();
-		}
-	}, [isSpecialitiesRefreshed, isLanguagesRefreshed, isDegreesRefreshed, isInsuranceAdded, isInsuranceRemoved])
+	const [ deleteInsurance] = useDeleteUserInsurancesMutation();
+	const [ addInsurance, { isSuccess: isInsuranceAdded }] = useAddUserInsurancesMutation();
 
 	useEffect(() => {
 		// setIsInsuransesListOpen(false);

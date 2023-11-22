@@ -20,7 +20,7 @@ const ProfilesEdition = () => {
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
 	const profileId =  pathname.split('/').pop();
-	const { isLoading, isSuccess, data: profile = {}} = useGetProfileByIdQuery(profileId);
+	const { isLoading, isSuccess, data: profile = {} } = useGetProfileByIdQuery(profileId);
 
 	return (
 			<div className='settings-layout'>
@@ -78,6 +78,10 @@ const ProfilesEdition = () => {
 									<TabPanel>
 										<SpecialityData
 											id={profileId}
+											usersInsurances={profile.insurances || []}
+											userSpecialities={profile.specialities || []}
+											usersLanguages={profile.languages || []}
+											usersDegrees={profile.medicalDegrees || []}
 										/>
 									</TabPanel>
 									<TabPanel>

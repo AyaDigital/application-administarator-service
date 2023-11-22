@@ -10,14 +10,10 @@ import {
 } from '@chakra-ui/react';
 
 import {
-	useFetchUserSpecialitiesQuery,
 	useRefreshUserSpecialitiesMutation,
-	useFetchUserInsurancesQuery,
 	useDeleteUserInsurancesMutation,
 	useAddUserInsurancesMutation,
-	useFetchUserLanguagesQuery,
 	useRefreshUserLanguagesMutation,
-	useFetchUserDegreesQuery,
 	useRefreshUserDegreesMutation,
 	useUpdateProfileAboutInfoMutation,
 	useGetProfileAboutInfoQuery,
@@ -38,7 +34,11 @@ import { LanguagesLoader } from './dictionaryLoaders/languages';
 import '../../profilesEdition.scss';
 
 const SpecialityData = ({
-	id = null
+	id = null,
+	userSpecialities = [],
+	usersInsurances = [],
+	usersLanguages = [],
+	usersDegrees = []
 }) => {
 	const isLoading = false;
 	const [file, setFile] = useState([]);
@@ -47,10 +47,6 @@ const SpecialityData = ({
 	const [bio, setBio] = useState();
 	const [fileObject, setFileObject] = useState([]);
 
-	const { isLoading: isUserSpecialitiesLoading, data: userSpecialities = [] } = useFetchUserSpecialitiesQuery(id);
-	const { isLoading: isUsersInsurancesFetching, data: usersInsurances = []} = useFetchUserInsurancesQuery(id);
-	const { isLoading: isUsersLanguagesFetching, data: usersLanguages = []} = useFetchUserLanguagesQuery(id);
-	const { isLoading: isUsersDegreesFetching, data: usersDegrees = []} = useFetchUserDegreesQuery(id);
 	const { isLoading: isAvatarLoading, isSuccess: isAvatarLoaded, data: avatarData = {} } = useGetProfileAvatarByUuidQuery(id);
 
 	const [ updateAvatar, { isLoading: isAvatarUpdating }] = useUploadProfileAvatarByUuidMutation();
@@ -61,7 +57,7 @@ const SpecialityData = ({
 	const { data: aboutInfo } = useGetProfileAboutInfoQuery(id);
 	const { data: educationData } = useGetProfileEducationQuery(id);
 
-	const [refreshSpecialities, { isLoading: isRefreshLoading, isSuccess: isSpecialitiesRefreshed }]
+	const [refreshSpecialities, { isLoading: isRefresSpecialitieshLoading, isSuccess: isSpecialitiesRefreshed }]
 	 	= useRefreshUserSpecialitiesMutation();
 	const [refreshLanguages, { isLoading: isRefreshLanguageLoading, isSuccess: isLanguagesRefreshed }]
 	 	= useRefreshUserLanguagesMutation();
@@ -69,7 +65,19 @@ const SpecialityData = ({
 		= useRefreshUserDegreesMutation();
 
 	const [ deleteInsurance, { isSuccess: isInsuranceRemoved }] = useDeleteUserInsurancesMutation();
-	const [ addInsurance, { isSuccess: isInsuranceAdded }] = useAddUserInsurancesMutation();
+	const [ addInsurance, { isSuccess: isInsuranceAdded, isLoading: isRefreshInsuranceLoading }] = useAddUserInsurancesMutation();
+
+	useEffect(() => {
+		if (
+			isSpecialitiesRefreshed ||
+			isLanguagesRefreshed ||
+			isDegreesRefreshed ||
+			isInsuranceRemoved ||
+			isInsuranceAdded
+		) {
+			// updateProfile();
+		}
+	}, [isSpecialitiesRefreshed, isLanguagesRefreshed, isDegreesRefreshed, isInsuranceAdded, isInsuranceRemoved])
 
 	useEffect(() => {
 		// setIsInsuransesListOpen(false);
@@ -237,7 +245,7 @@ const SpecialityData = ({
 							/>
 						</GridItem>
 						{
-							usersInsurances.length ? (
+							(usersInsurances !== null && usersInsurances.length) ? (
 								<GridItem h='auto' p={'10px'} colSpan={3}>
 									<div className='items-cloud'>
 										{
@@ -268,7 +276,7 @@ const SpecialityData = ({
 
 						</GridItem>
 						{
-							userSpecialities.length ? (
+							(userSpecialities !== null && userSpecialities.length) ? (
 								<GridItem h='auto' p={'10px'} colSpan={3}>
 									<div className='items-cloud'>
 										{
@@ -299,7 +307,7 @@ const SpecialityData = ({
 
 						</GridItem>
 						{
-							usersDegrees.length ? (
+							(usersDegrees !== null && usersDegrees.length) ? (
 								<GridItem h='auto' p={'10px'} colSpan={3}>
 									<div className='items-cloud'>
 										{
@@ -326,7 +334,7 @@ const SpecialityData = ({
 							<DegreesLoader handleAddDegree={handleAddDegree} />
 						</GridItem>
 						{
-							usersLanguages.length ? (
+							(usersLanguages !== null && usersLanguages.length) ? (
 								<GridItem h='auto' p={'10px'} colSpan={3}>
 									<div className='items-cloud'>
 										{

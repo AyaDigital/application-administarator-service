@@ -10,7 +10,6 @@ const EDIT_LANGUAGE = '/api/settings/languages/edit-language';
 const DELETE_LANGUAGE = '/api/settings/languages/destroy-language';
 
 const SEARCH_PROFILE_LANGUAGES = '/api/settings/languages/list-admin';
-const REFRESH_PROFILE_LANGUAGES = '/api/settings/languages/refresh-by-uuid';
 
 export const languagesApi = createApi({
 	reducerPath: 'languagesApi',
@@ -71,14 +70,6 @@ export const languagesApi = createApi({
 			}),
 			providesTags: ["UserLanguages", "UserLanguage"]
 		}),
-		refreshUserLanguages: builder.mutation({
-			query: ({id, data}) => ({
-				url: HEALTHAPP_URI + REFRESH_PROFILE_LANGUAGES + '/' + id,
-				method: 'PUT',
-				body: data
-			  }),
-			invalidatesTags: ["UserLanguages", "UserLanguage"],
-		}),
 	}),
 })
 
@@ -88,6 +79,5 @@ export const {
 	useCreateLanguageMutation,
 	useEditLanguageMutation,
 	useDeleteLanguageMutation,
-	useFetchUserLanguagesQuery,
-	useRefreshUserLanguagesMutation
+	useFetchUserLanguagesQuery
 } = languagesApi;

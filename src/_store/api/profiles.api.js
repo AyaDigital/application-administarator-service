@@ -17,6 +17,10 @@ const PROFILES = '/api/profiles';
 const PROFILES_ROLES = '/api/profiles/roles';
 const PROFILE = '/api/profile';
 const API_SETTING_ADDRESS = '/api/settings/address';
+const REFRESH_USER_SPECIALITIES = '/api/specialities/refresh';
+const REFRESH_PROFILE_LANGUAGES = '/api/settings/languages/refresh-by-uuid';
+const REFRESH_PROFILE_DEGREES = '/api/settings/medical-degrees/refresh-by-uuid';
+const PROFILE_INSURANCES = '/api/settings/insurances/profile-insurances-by-uuid';
 
 export const profilesApi = createApi({
 	reducerPath: 'profilesApi',
@@ -143,7 +147,47 @@ export const profilesApi = createApi({
 				method: 'GET'
 			}),
 			providesTags: (result) => ["Address"],
-		})
+		}),
+		refreshUserSpecialities: build.mutation({
+			query: ({id, data}) => ({
+				url: HEALTHAPP_URI + REFRESH_USER_SPECIALITIES + '/' + id,
+				method: 'PUT',
+				body: data
+			  }),
+			invalidatesTags: ["Profile"],
+		}),
+		refreshUserLanguages: build.mutation({
+			query: ({id, data}) => ({
+				url: HEALTHAPP_URI + REFRESH_PROFILE_LANGUAGES + '/' + id,
+				method: 'PUT',
+				body: data
+			  }),
+			  invalidatesTags: ["Profile"],
+		}),
+		refreshUserDegrees: build.mutation({
+			query: ({id, data}) => ({
+				url: HEALTHAPP_URI + REFRESH_PROFILE_DEGREES + '/' + id,
+				method: 'PUT',
+				body: data
+			  }),
+			  invalidatesTags: ["Profile"],
+		}),
+		addUserInsurances: build.mutation({
+			query: ({id, data}) => ({
+				url: HEALTHAPP_URI + PROFILE_INSURANCES + '/' + id,
+				method: 'POST',
+				body: data
+			  }),
+			  invalidatesTags: ["Profile"],
+		}),
+		deleteUserInsurances: build.mutation({
+			query: ({id, data}) => ({
+				url: HEALTHAPP_URI + PROFILE_INSURANCES + '/' + id,
+				method: 'DELETE',
+				body: data
+			  }),
+			  invalidatesTags: ["Profile"],
+		}),
 	}),
 })
 
@@ -162,5 +206,10 @@ export const {
 	useGetProfileAvatarByUuidQuery,
 	useUpdateCredentialsMutation,
 	useUpdateProfileAddressMutation,
-	useGetProfileAddressQuery
+	useGetProfileAddressQuery,
+	useRefreshUserSpecialitiesMutation,
+	useRefreshUserDegreesMutation,
+	useDeleteUserInsurancesMutation,
+	useAddUserInsurancesMutation,
+	useRefreshUserLanguagesMutation
 } = profilesApi;

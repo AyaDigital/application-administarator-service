@@ -48,22 +48,6 @@ export const insuranceApi = createApi({
 			  },
 			  providesTags: (result) => ["Insurance"],
 		}),
-		addUserInsurances: builder.mutation({
-			query: ({id, data}) => ({
-				url: HEALTHAPP_URI + PROFILE_INSURANCES + '/' + id,
-				method: 'POST',
-				body: data
-			  }),
-			invalidatesTags: ["UserInsurances", "UserInsurance"],
-		}),
-		deleteUserInsurances: builder.mutation({
-			query: ({id, data}) => ({
-				url: HEALTHAPP_URI + PROFILE_INSURANCES + '/' + id,
-				method: 'DELETE',
-				body: data
-			  }),
-			invalidatesTags: ["UserInsurances", "UserInsurance"],
-		}),
 		fetchUserInsurances: builder.query({
 			query: (id) => ({
 				url: HEALTHAPP_URI + PROFILE_INSURANCES + '/' + id,
@@ -133,8 +117,6 @@ export const {
 	useFetchInsurancesQuery,
 	useFetchInsurancesListQuery,
 	useFetchUserInsurancesQuery,
-	useDeleteUserInsurancesMutation,
-	useAddUserInsurancesMutation,
 	useCreateInsuranceMutation,
 	// useBindAddressMutation,
 	useFetchOneInsuranceQuery,

@@ -99,11 +99,11 @@ const BaseData = ({
 	}
 
 	const onChangeActive = ({ target: {value, checked} }) => {
-		setIsActive(!checked)
+		setIsActive(checked)
 	}
 
 	const onChangeVerified = ({ target: {value, checked} }) => {
-		setIsVerified(!checked)
+		setIsVerified(checked)
 	}
 
 	const handleUpdatePassword = () => {

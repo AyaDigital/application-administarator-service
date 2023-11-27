@@ -7,12 +7,10 @@ const HEALTHAPP_URI = process.env.REACT_APP_BASE_URL
 
 const PRACTITIONERS = '/api/profiles';
 const PROFILE = '/api/profile';
-const PRACTITIONERS_ADMIN_LIST = '/idm-list';
 const AVATAR = '/avatar';
 const UPLOAD = '/upload';
 const ABOUT_INFO = '/about-info';
 const PROFILES = '/api/profiles';
-const PROFILES_LIST = '/api/profiles/all';
 const SPECIALITIES = '/api/specialities';
 const SPECIALITIES_ADD = SPECIALITIES + "/add";
 const SPECIALITIES_DESTROY = SPECIALITIES + "/destroy";
@@ -67,18 +65,6 @@ export const practitionersApi = createApi({
 			},
 			providesTags: (result) => ["Practitioner"],
 		}),
-		fetchPractitioners: build.query({
-			query: ({ page = 0, search = ''}) => {
-				let tail = '?page=' + page;
-				if (search) {
-					tail = "?search=" + search + '&page=' + page;
-				}
-				return {
-					url: ADMIN_URI + PROFILES_LIST + tail,
-				} 
-			},
-			providesTags: (result) => ["Practitioners"],
-		}),
 		fetchOnePractitioner: build.query({
 			query: (id) => `${ADMIN_URI}${PRACTITIONERS}/${id}`,
 			providesTags: (result) => ["Practitioner"],
@@ -104,19 +90,11 @@ export const practitionersApi = createApi({
 		fetchPractitionerSpecialities: build.query({
 			query: (id) =>  HEALTHAPP_URI + SHOW_SPECIALITIES + '/' + id,
 			providesTags: (result) => ["Specialities"]
-		}),
-		deletePractitioner: build.mutation({
-			query: (id) => ({
-				url: ADMIN_URI + PRACTITIONERS + "/" + id,
-				method: 'delete'
-			}),
-			providesTags: (result) => ["Practitioners"],
 		})
 	}),
 })
 
 export const {
-	useFetchPractitionersQuery,
 	useFetchOnePractitionerQuery,
 	useUpdatePractitionerMutation,
 	useCreatePractitionerMutation,
@@ -125,6 +103,5 @@ export const {
 	useGetAboutInfoQuery,
 	useAddPractitionerSpecialitiesMutation,
 	useRemovePractitionerSpecialitiesMutation,
-	useFetchPractitionerSpecialitiesQuery,
-	useDeletePractitionerMutation
+	useFetchPractitionerSpecialitiesQuery
 } = practitionersApi;

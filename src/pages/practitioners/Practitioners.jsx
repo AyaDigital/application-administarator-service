@@ -38,13 +38,17 @@ const Practitioners = () => {
 	const navigate = useNavigate();
 	const [page, setPage] = useState(0);
 	const [search, setSearch] = useState('');
+	const [error, setError] = useState('');
 	const { isLoading, isError, data = {}} = useFetchPractitionersQuery({ page, search });
 	const { content: practitioners = [], totalElements} = data;
 	const [
 		deletePractitioner,
 		{
 			isLoading: isDeletionLoading,
-			isSuccess: isPractitionerDeleted
+			isSuccess: isPractitionerDeleted,
+			isError: isDeleteUserError,
+			error: deleteError,
+			reset: resetDeletionState
 		}
 	] = useDeletePractitionerMutation();
 	const [open, setOpen] = useState(false);
@@ -59,8 +63,14 @@ const Practitioners = () => {
 	const { isLoading: isFetchingOnePractitioner, data: practitioner = {}} = useFetchOnePractitionerQuery(id, {
 		skip
 	});
-	const handleClose = () => setOpen(false);
-	const handleModalClose = () => setIsModalOpen(false);
+	const handleClose = () => {
+		setOpen(false);
+	}
+	const handleDeleteModalClose = () => {
+		setIsModalOpen(false);
+		resetDeletionState();
+		setError('');
+	}
 
 	const handleCreateFormClose = () => setIsCreateFormOpen(false);
 
@@ -75,7 +85,14 @@ const Practitioners = () => {
 	}
 
 	useEffect(() => {
+		if (isDeleteUserError) {
+			setError(deleteError?.data)
+		}
+	}, [isDeleteUserError, deleteError])
+
+	useEffect(() => {
 		if (isPractitionerDeleted) {
+			handleDeleteModalClose();
 			setSelectedPractitioners([])
 			setId(null);
 			setSkip(true);
@@ -175,15 +192,19 @@ const Practitioners = () => {
 									setSearch(event.target.value);
 								}}
 							/>
-							<InputRightElement width='4.5rem' height={'100%'}>
-								<CloseButton
-									color='gray.500'
-									size='sm'
-									onClick={() => {
-										setSearch('');
-									}}
-								/>
-							</InputRightElement>
+							{
+								search ? (
+									<InputRightElement width='4.5rem' height={'100%'}>
+										<CloseButton
+											color='gray.500'
+											size='sm'
+											onClick={() => {
+												setSearch('');
+											}}
+										/>
+									</InputRightElement>
+								) : null
+							}
 						</InputGroup>
 
 					</div>
@@ -209,6 +230,7 @@ const Practitioners = () => {
 													<Checkbox
 														value={item.uuid}
 														onChange={onChange}
+														isChecked={selectedPractitioners.includes(item.uuid)}
 														disabled={open}
 													/>
 												</div>
@@ -317,7 +339,7 @@ const Practitioners = () => {
 					isOpen={isModalOpen}
 					isCentered
 					size='xl'
-					onClose={() => handleModalClose()}
+					onClose={() => handleDeleteModalClose()}
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 				>
@@ -325,8 +347,13 @@ const Practitioners = () => {
 					<ModalContent>
 						<ModalHeader>
 							<div className='modal-window-header'>
+								{
+									isDeleteUserError ? (
+										<div className='error-block'>{error}</div>
+									) : null
+								}
 								<div>Delete practitioner</div>
-								<div>{`${practitioner?.fullName}`}</div>
+								<div>{`${practitioner?.firstName} ${practitioner?.lastName}`}</div>
 							</div>
 						</ModalHeader>
 						<ModalCloseButton />
@@ -336,9 +363,8 @@ const Practitioners = () => {
 									isLoading={isDeletionLoading}
 									handleOperation={() => {
 										deletePractitioner(selectedPractitioners[0]);
-										handleModalClose();
 									}}
-									onClose={() => handleModalClose()}
+									onClose={() => handleDeleteModalClose()}
 								/>
 							</div>
 						</ModalBody>

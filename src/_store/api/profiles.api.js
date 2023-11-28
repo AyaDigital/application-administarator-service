@@ -14,6 +14,7 @@ const UPLOAD = '/upload';
 const ABOUT_INFO = '/api/profile/about-info';
 const EDUCATION = '/api/education-train';
 const PROFILES = '/api/profiles';
+const PROFILES_LIST = '/api/profiles/all';
 const PROFILES_ROLES = '/api/profiles/roles';
 const PROFILE = '/api/profile';
 const API_SETTING_ADDRESS = '/api/settings/address';
@@ -25,15 +26,27 @@ const PROFILE_INSURANCES = '/api/settings/insurances/profile-insurances-by-uuid'
 export const profilesApi = createApi({
 	reducerPath: 'profilesApi',
 	baseQuery: baseQueryWithToken,
-	entityTypes: ["Profile"],
+	entityTypes: ["Profile", "Practitioners"],
 	endpoints: (build) => ({
+		fetchPractitioners: build.query({
+			query: ({ page = 0, search = ''}) => {
+				let tail = '?page=' + page;
+				if (search) {
+					tail = "?search=" + search + '&page=' + page;
+				}
+				return {
+					url: ADMIN_URI + PROFILES_LIST + tail,
+				} 
+			},
+			providesTags: (result) => ["Practitioners"],
+		}),
 		createProfile: build.mutation({
 			query: (data) => ({
 				url: ADMIN_URI + PROFILES,
 				method: 'POST',
 				body: data
 			  }),
-			invalidatesTags: ["Profile"],
+			invalidatesTags: ["Profile", "Practitioners"],
 		}),
 		updateProfile: build.mutation({
 			query: ({ id, patch }) => ({
@@ -41,7 +54,7 @@ export const profilesApi = createApi({
 			  method: 'PATCH',
 			  body: patch
 			}),
-			invalidatesTags: ["Profile"],
+			invalidatesTags: ["Profile", "Practitioners"],
 		  }),
         getProfileById: build.query({
             query: (id) =>  ({
@@ -188,10 +201,18 @@ export const profilesApi = createApi({
 			  }),
 			  invalidatesTags: ["Profile"],
 		}),
+		deletePractitioner: build.mutation({
+			query: (id) => ({
+				url: ADMIN_URI + PROFILES + "/" + id,
+				method: 'delete'
+			}),
+			invalidatesTags: ["Practitioners"],
+		})
 	}),
 })
 
 export const {
+	useFetchPractitionersQuery,
 	useCreateProfileMutation,
 	useUpdateProfileMutation,
 	useUpdateProfileEducationMutation,
@@ -211,5 +232,6 @@ export const {
 	useRefreshUserDegreesMutation,
 	useDeleteUserInsurancesMutation,
 	useAddUserInsurancesMutation,
-	useRefreshUserLanguagesMutation
+	useRefreshUserLanguagesMutation,
+	useDeletePractitionerMutation
 } = profilesApi;
